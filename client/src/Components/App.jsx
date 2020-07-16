@@ -4,10 +4,8 @@ import './App.css';
 function reducer(state, action) {
   switch (action.type) {
     case 'ADD_PALETTE':
-      window.localStorage.setItem('state', JSON.stringify(state.palettes));
       return { palettes: [...state.palettes, { id: action.id, hex: action.hexInput, mode: action.mode, colors: action.colors }] };
     case 'REMOVE_PALETTE':
-      window.localStorage.setItem('state', JSON.stringify(state.palettes));
       const newState = state.palettes.filter(palette => palette.id !== action.id)
       return { palettes: [...newState] }
     case 'INITIALIZE_STATE':
@@ -18,6 +16,7 @@ function reducer(state, action) {
 }
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, { palettes: [] })
 
   const inputEl = useRef(null);
   const monochromeDark = useRef(null);
@@ -26,8 +25,6 @@ function App() {
   const complement = useRef(null);
   const anaComplement = useRef(null);
 
-  const [state, dispatch] = useReducer(reducer, { palettes: [] })
-
   useEffect(() => {
     const storage = window.localStorage.getItem('state');
     const jsonStorage = JSON.parse(storage);
@@ -35,6 +32,11 @@ function App() {
 
     console.log('STATE -->', state);
   }, [])
+
+  useEffect(() => {
+    window.localStorage.setItem('state', JSON.stringify(state.palettes));
+
+  }, [state])
 
   const getHex = (hexInput, mode = 'monochrome') => {
     fetch(`/api/color/${hexInput}/${mode}`)
