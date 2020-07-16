@@ -24,6 +24,13 @@
 
 .App-form {
   margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.form__options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .App-content {

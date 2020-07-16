@@ -15,7 +15,10 @@ function reducer(state, action) {
 function App() {
 
   const inputEl = useRef(null);
-  const checkboxEl = useRef(null);
+  const monochromeDark = useRef(null);
+  const monochromeLight = useRef(null);
+  const analogic = useRef(null);
+  const complement = useRef(null);
 
   const [state, dispatch] = useReducer(reducer, { palettes: [] })
 
@@ -42,16 +45,38 @@ function App() {
       </header>
 
       <section className="App-form">
+        <form className="form__options">
+          <label htmlFor="#monoD">Dark Monochrome</label>
+          <input ref={monochromeDark} id="mono" type="checkbox" value="monochrome-dark" />
+          <label htmlFor="#monoL">Light Monochrome</label>
+          <input ref={monochromeLight} id="mono" type="checkbox" value="monochrome-light" />
+          <label htmlFor="#ana">Analogic</label>
+          <input ref={analogic} id="ana" type="checkbox" value="analogic" />
+          <label htmlFor="#comp">Complement</label>
+          <input ref={complement} id="comp" type="checkbox" value="complement" />
+        </form>
+
         <form onSubmit={e => {
           e.preventDefault();
-          console.log('VALUE------------------->', inputEl.current.value);
-          console.log('CHECKBOX ->', checkboxEl.current.value)
-          getHex(inputEl.current.value);
-          inputEl.current.value = '';
-          // console.log(state);
+          if (monochromeDark.current.checked) {
+            getHex(inputEl.current.value, monochromeDark.current.value);
+            monochromeDark.current.checked = false;
+          } else if (monochromeLight.current.checked) {
+            getHex(inputEl.current.value, monochromeLight.current.value);
+            monochromeLight.current.checked = false;
+          } else if (complement.current.checked) {
+            getHex(inputEl.current.value, complement.current.value);
+            complement.current.checked = false;
+          } else if (analogic.current.checked) {
+            getHex(inputEl.current.value, analogic.current.value);
+            analogic.current.checked = false;
+          } else {
+            getHex(inputEl.current.value);
+          }
+
+          // inputEl.current.value = '';
         }}>
           <input ref={inputEl} type="text" placeholder="Enter a hex code" />
-          <input ref={checkboxEl} type="checkbox" />
           <input type="submit" value="Get Color Palette" />
         </form>
       </section>
