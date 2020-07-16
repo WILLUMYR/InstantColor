@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import './App.css';
 import ColorCard from './ColorCard';
+import Form from './Form';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -21,12 +22,12 @@ function App() {
 
   // const removeCard = dispatch({ type: 'REMOVE_PALETTE', id: palette.id });
 
-  const inputEl = useRef(null);
-  const monochromeDark = useRef(null);
-  const monochromeLight = useRef(null);
-  const analogic = useRef(null);
-  const complement = useRef(null);
-  const anaComplement = useRef(null);
+  // const inputEl = useRef(null);
+  // const monochromeDark = useRef(null);
+  // const monochromeLight = useRef(null);
+  // const analogic = useRef(null);
+  // const complement = useRef(null);
+  // const anaComplement = useRef(null);
 
   useEffect(() => {
     const storage = window.localStorage.getItem('state');
@@ -60,8 +61,10 @@ function App() {
         <h1>InstantColors</h1>
         <h5>By Markus Willumstad Myrland</h5>
       </header>
-
-      <section className="App__form">
+      <Form
+        getHex={getHex}
+      />
+      {/* <section className="App__form">
         <form className="form__options">
           <label htmlFor="#monoD">Dark Monochrome</label>
           <input ref={monochromeDark} id="mono" type="checkbox" value="monochrome-dark" />
@@ -99,7 +102,7 @@ function App() {
           <input ref={inputEl} type="text" placeholder="Enter a hex code" />
           <input className="input__button" type="submit" value="Get Color Palette" />
         </form>
-      </section>
+      </section> */}
 
       <section className="App__content">
         {state.palettes.map(palette => {
