@@ -1,0 +1,50 @@
+.App {
+  text-align: center;
+}
+
+* {
+  margin: 0;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-form {
+  margin-bottom: 20px;
+}
+
+.App-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.test {
+  height: 30vh;
+}
+
+#test {
+  background-color: #61dafb;
+  height: 50px;
+}
+
+.palette {
+  height: 300px;
+  width: 300px;
+}
+
+.palette img {
+  width: 300px;
+  height: 300px;
+}
