@@ -63,6 +63,13 @@
   color: white;
   font-weight: bold;
   font-size: 1.5rem;
+  transition: ease 0.2s;
+}
+
+.input__button:hover {
+  background-color: #505F7C;
+  cursor: pointer;
+  transition: ease 0.2s;
 }
 
 .App-content {
@@ -99,8 +106,7 @@
 .palette__colors {
   height: 320px;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  border-top: 5px solid white;
+  grid-template-rows: 2fr 2fr 2fr 2fr 2fr 1fr;
   border-radius: 0 0 20px 20px;
   overflow: hidden;
 }
@@ -113,7 +119,17 @@
   margin-bottom: 5px;
 }
 
-.palette img {
-  width: 300px;
-  height: 300px;
+.remove__button {
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  transition: ease 0.2s;
+}
+
+.remove__button:hover {
+  background-color: #505F7C;
+  cursor: pointer;
+  transition: ease 0.2s;
 }

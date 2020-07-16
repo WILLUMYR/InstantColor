@@ -4,7 +4,14 @@ import './App.css';
 function reducer(state, action) {
   switch (action.type) {
     case 'ADD_PALETTE':
-      return { palettes: [...state.palettes, { img: action.img, hex: action.hexInput, mode: action.mode, colors: action.colors }] };
+      window.localStorage.setItem('state', JSON.stringify(state.palettes));
+      return { palettes: [...state.palettes, { id: action.id, hex: action.hexInput, mode: action.mode, colors: action.colors }] };
+    case 'REMOVE_PALETTE':
+      window.localStorage.setItem('state', JSON.stringify(state.palettes));
+      const newState = state.palettes.filter(palette => palette.id !== action.id)
+      return { palettes: [...newState] }
+    case 'INITIALIZE_STATE':
+      return { palettes: [...action.state] }
     default:
       return state;
   }
@@ -22,8 +29,12 @@ function App() {
   const [state, dispatch] = useReducer(reducer, { palettes: [] })
 
   useEffect(() => {
-    console.log(state);
-  })
+    const storage = window.localStorage.getItem('state');
+    const jsonStorage = JSON.parse(storage);
+    dispatch({ type: 'INITIALIZE_STATE', state: jsonStorage })
+
+    console.log('STATE -->', state);
+  }, [])
 
   const getHex = (hexInput, mode = 'monochrome') => {
     fetch(`/api/color/${hexInput}/${mode}`)
@@ -33,7 +44,7 @@ function App() {
 
         dispatch({
           type: 'ADD_PALETTE',
-          img: data.image.bare,
+          id: Math.random(),
           hexInput,
           mode,
           colors: data.colors,
@@ -92,24 +103,25 @@ function App() {
         {state.palettes.map(palette => {
           const mainColor = `#${palette.hex}`
           return (
-            <article className="palette" style={{ backgroundColor: mainColor }} key={Math.random()}>
+            <article className="palette" style={{ backgroundColor: mainColor }} key={palette.id}>
               <h1>#{palette.hex.toUpperCase()}</h1>
               <h3>{palette.mode}</h3>
               <div className="palette__colors">
                 {palette.colors.map(color => {
                   return (
-                    <div className="palette__color" style={{ backgroundColor: color.hex.value }}>
+                    <div key={Math.random()} className="palette__color" style={{ backgroundColor: color.hex.value }}>
                       <h3>{color.name.value}</h3>
                       <p>{color.hex.value}</p>
                     </div>
                   )
                 })}
+                <div key={palette.id} className="remove__button" onClick={() => { dispatch({ type: 'REMOVE_PALETTE', id: palette.id }) }}>REMOVE</div>
               </div>
             </article>
           )
         })}
       </section>
-    </main>
+    </main >
   );
 }
 
