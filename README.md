@@ -7,7 +7,7 @@ npm start
 ````
 *This will install all dependecies needed and start the server on port 5000*
 
-Then enter client with
+Then open a second terminal and enter client with
 ```javascript
 cd client
 ````
