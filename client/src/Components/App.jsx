@@ -42,7 +42,6 @@ function App() {
     fetch(`/api/color/${hexInput}/${mode}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
 
         dispatch({
           type: 'ADD_PALETTE',
@@ -56,12 +55,12 @@ function App() {
 
   return (
     <main className="App">
-      <header className="App-header">
+      <header className="App__header">
         <h1>InstantColors</h1>
         <h5>By Markus Willumstad Myrland</h5>
       </header>
 
-      <section className="App-form">
+      <section className="App__form">
         <form className="form__options">
           <label htmlFor="#monoD">Dark Monochrome</label>
           <input ref={monochromeDark} id="mono" type="checkbox" value="monochrome-dark" />
@@ -101,7 +100,7 @@ function App() {
         </form>
       </section>
 
-      <section className="App-content">
+      <section className="App__content">
         {state.palettes.map(palette => {
           const mainColor = `#${palette.hex}`
           return (
@@ -123,6 +122,10 @@ function App() {
           )
         })}
       </section>
+      <footer className="App__footer">
+        <p>Made using http://thecolorapi.com</p>
+        <a href="https://github.com/WILLUMYR">WILLUMYR on GitHub</a>
+      </footer>
     </main >
   );
 }

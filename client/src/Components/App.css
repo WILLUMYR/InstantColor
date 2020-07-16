@@ -1,15 +1,18 @@
 .App {
   text-align: center;
+  position: relative;
+  padding-bottom: 50px;
+  min-height: 100vh;
 }
 
 * {
   margin: 0;
 }
 
-.App-header {
+.App__header {
   background-color: #282c34;
   max-height: 10vh;
-  padding: 30px 20px;
+  padding: 20px 20px;
   text-align: left;
   align-items: center;
   font-size: calc(10px + 2vmin);
@@ -17,15 +20,16 @@
   margin-bottom: 30px;
 }
 
-.App-header h5 {
+.App__header h1 {
+  animation: TitleChanger 10s alternate-reverse infinite ease;
+
+}
+
+.App__header h5 {
   font-weight: normal;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-.App-form {
+.App__form {
   margin-bottom: 20px;
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -72,7 +76,7 @@
   transition: ease 0.2s;
 }
 
-.App-content {
+.App__content {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -132,4 +136,39 @@
   background-color: #505F7C;
   cursor: pointer;
   transition: ease 0.2s;
+}
+
+.App__footer {
+  background-color: #282c34;
+  color: white;
+  height: 4vh;
+  width: 100vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-top: 50px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  padding: 0px;
+}
+
+.App__footer a {
+  text-decoration: none;
+  color: white;
+  transition: ease 0.2s;
+  margin-left: 30px;
+}
+
+.App__footer a:hover {
+  color: #505F7C;
+  transition: ease 0.2s;
+
+}
+
+@keyframes TitleChanger {
+  0%   {color: #EA476D;}
+  25%  {color: #25DFB3;}
+  50%  {color: #E4DE2E;}
+  100% {color: #5324D4;}
 }
