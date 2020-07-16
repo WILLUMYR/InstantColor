@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useReducer } from 'react';
 import './App.css';
+import ColorCard from './ColorCard';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -18,6 +19,8 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, { palettes: [] })
 
+  // const removeCard = dispatch({ type: 'REMOVE_PALETTE', id: palette.id });
+
   const inputEl = useRef(null);
   const monochromeDark = useRef(null);
   const monochromeLight = useRef(null);
@@ -29,8 +32,6 @@ function App() {
     const storage = window.localStorage.getItem('state');
     const jsonStorage = JSON.parse(storage);
     dispatch({ type: 'INITIALIZE_STATE', state: jsonStorage })
-
-    console.log('STATE -->', state);
   }, [])
 
   useEffect(() => {
@@ -104,22 +105,12 @@ function App() {
         {state.palettes.map(palette => {
           const mainColor = `#${palette.hex}`
           return (
-            <article className="palette" style={{ backgroundColor: mainColor }} key={palette.id}>
-              <h1>#{palette.hex.toUpperCase()}</h1>
-              <h3>{palette.mode}</h3>
-              <div className="palette__colors">
-                {palette.colors.map(color => {
-                  return (
-                    <div key={Math.random()} className="palette__color" style={{ backgroundColor: color.hex.value }}>
-                      <h3>{color.name.value}</h3>
-                      <p>{color.hex.value}</p>
-                    </div>
-                  )
-                })}
-                <div key={palette.id} className="remove__button" onClick={() => { dispatch({ type: 'REMOVE_PALETTE', id: palette.id }) }}>REMOVE</div>
-              </div>
-            </article>
-          )
+            <ColorCard
+              key={palette.id}
+              mainColor={mainColor}
+              palette={palette}
+              removeCard={() => { dispatch({ type: 'REMOVE_PALETTE', id: palette.id }) }}
+            />)
         })}
       </section>
       <footer className="App__footer">
