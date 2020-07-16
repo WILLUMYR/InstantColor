@@ -4,9 +4,7 @@ import './App.css';
 function reducer(state, action) {
   switch (action.type) {
     case 'ADD_PALETTE':
-      return { palettes: [...state.palettes, { img: action.img, hex: action.hex }] };
-    case 'DECREMENT':
-      return state - 1;
+      return { palettes: [...state.palettes, { img: action.img, hex: action.hexInput, mode: action.mode, colors: action.colors }] };
     default:
       return state;
   }
@@ -19,6 +17,7 @@ function App() {
   const monochromeLight = useRef(null);
   const analogic = useRef(null);
   const complement = useRef(null);
+  const anaComplement = useRef(null);
 
   const [state, dispatch] = useReducer(reducer, { palettes: [] })
 
@@ -26,22 +25,27 @@ function App() {
     console.log(state);
   })
 
-  const getHex = (hex, mode = 'monochrome') => {
-    fetch(`/api/color/${hex}/${mode}`)
+  const getHex = (hexInput, mode = 'monochrome') => {
+    fetch(`/api/color/${hexInput}/${mode}`)
       .then(res => res.json())
       .then(data => {
         console.log(data);
 
-        dispatch({ type: 'ADD_PALETTE', img: data.image.bare, hex })
+        dispatch({
+          type: 'ADD_PALETTE',
+          img: data.image.bare,
+          hexInput,
+          mode,
+          colors: data.colors,
+        })
       })
-
-
   }
 
   return (
     <main className="App">
       <header className="App-header">
-        <h1>Hello World!</h1>
+        <h1>InstantColors</h1>
+        <h5>By Markus Willumstad Myrland</h5>
       </header>
 
       <section className="App-form">
@@ -54,9 +58,11 @@ function App() {
           <input ref={analogic} id="ana" type="checkbox" value="analogic" />
           <label htmlFor="#comp">Complement</label>
           <input ref={complement} id="comp" type="checkbox" value="complement" />
+          <label htmlFor="#anaComp">Analogic-Complement</label>
+          <input ref={anaComplement} id="anaComp" type="checkbox" value="analogic-complement" />
         </form>
 
-        <form onSubmit={e => {
+        <form className="form__input" onSubmit={e => {
           e.preventDefault();
           if (monochromeDark.current.checked) {
             getHex(inputEl.current.value, monochromeDark.current.value);
@@ -70,24 +76,36 @@ function App() {
           } else if (analogic.current.checked) {
             getHex(inputEl.current.value, analogic.current.value);
             analogic.current.checked = false;
+          } else if (anaComplement.current.checked) {
+            getHex(inputEl.current.value, anaComplement.current.value);
+            anaComplement.current.checked = false;
           } else {
             getHex(inputEl.current.value);
           }
-
-          // inputEl.current.value = '';
         }}>
           <input ref={inputEl} type="text" placeholder="Enter a hex code" />
-          <input type="submit" value="Get Color Palette" />
+          <input className="input__button" type="submit" value="Get Color Palette" />
         </form>
       </section>
 
       <section className="App-content">
         {state.palettes.map(palette => {
+          const mainColor = `#${palette.hex}`
           return (
-            <div className="palette" key={Math.random()}>
-              <h1>#{palette.hex}</h1>
-              <img src={palette.img} alt="" />
-            </div>
+            <article className="palette" style={{ backgroundColor: mainColor }} key={Math.random()}>
+              <h1>#{palette.hex.toUpperCase()}</h1>
+              <h3>{palette.mode}</h3>
+              <div className="palette__colors">
+                {palette.colors.map(color => {
+                  return (
+                    <div className="palette__color" style={{ backgroundColor: color.hex.value }}>
+                      <h3>{color.name.value}</h3>
+                      <p>{color.hex.value}</p>
+                    </div>
+                  )
+                })}
+              </div>
+            </article>
           )
         })}
       </section>

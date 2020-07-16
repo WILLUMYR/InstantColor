@@ -8,14 +8,17 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 20vh;
-  display: flex;
-  flex-direction: column;
+  max-height: 10vh;
+  padding: 30px 20px;
+  text-align: left;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.App-header h5 {
+  font-weight: normal;
 }
 
 .App-link {
@@ -26,16 +29,46 @@
   margin-bottom: 20px;
   display: grid;
   grid-template-columns: 1fr 2fr;
+  padding-bottom: 30px;
+  border-bottom: 3px solid #282c34;
 }
 
 .form__options {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  font-weight: bold;
+  text-align: right;
+}
+
+.form__options input {
+  border: 2px solid #282c34;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.form__options label {
+  margin-top: 5px;
+}
+
+.form__input {
+  display: grid;
+  grid-template-rows: 1fr 2fr;
+  padding-right: 30%;
+}
+
+.input__button {
+  margin-top: 10px;
+  background-color: #282c34;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .App-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .test {
   height: 30vh;
@@ -47,8 +80,37 @@
 }
 
 .palette {
-  height: 300px;
   width: 300px;
+  background-color: #282c34;
+  color: white;
+  border-radius: 20px;
+  margin: 10px 20px
+}
+
+.palette h1 {
+  margin-top: 15px;
+  font-size: 2rem;
+}
+
+.palette h3 {
+  margin-bottom: 15px;
+}
+
+.palette__colors {
+  height: 320px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  border-top: 5px solid white;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+
+.palette__color {
+  padding-top: 5px;
+}
+
+.palette__color h3 {
+  margin-bottom: 5px;
 }
 
 .palette img {
