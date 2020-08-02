@@ -22,7 +22,7 @@ function App() {
 
   useEffect(() => {
     const storage = window.localStorage.getItem('state');
-    if (!storage) {
+    if (storage) {
       const jsonStorage = JSON.parse(storage);
       dispatch({ type: 'INITIALIZE_STATE', state: jsonStorage })
     }
