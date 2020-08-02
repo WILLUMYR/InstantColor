@@ -40,8 +40,9 @@
 .form__options {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  font-weight: bold;
+  font-weight: bolder;
   text-align: right;
+  margin-left: 20px;
 }
 
 .form__options input {
